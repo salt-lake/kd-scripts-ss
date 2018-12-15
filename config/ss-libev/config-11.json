@@ -1,0 +1,8 @@
+{
+    "server":"0.0.0.0",
+    "server_port":33,
+    "local_port":1080,
+    "password":"lovekuando",
+    "timeout":60,
+    "method":"chacha20"
+}
