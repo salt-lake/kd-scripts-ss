@@ -44,18 +44,14 @@ function config_iptables(){
     iptables-restore /etc/iptables/rules.v4
 }
 
-check_netfilter() {
-  if ! [ -x "$(command -v netfilter-persistent)" ]; then
-    apt update
-    DEBIAN_FRONTEND=noninteractive apt install iptables-persistent -y
-  fi
-}
 
 function install(){
+
     install_ss
     install_supervisor
     optimize_ss
     config_iptables
+   
 }
 
 install
