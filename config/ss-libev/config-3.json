@@ -4,5 +4,6 @@
     "local_port":1080,
     "password":"lovekuando",
     "timeout":60,
-    "method":"chacha20"
+    "method":"chacha20",
+    "fast_open":true
 }

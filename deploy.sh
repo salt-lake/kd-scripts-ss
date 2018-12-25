@@ -29,11 +29,13 @@ function install_supervisor(){
     fi
 }
 
-function optimize_ss(){
+configure_ss() {
+
     cp /home/kd-scripts-ss/config/shadowsocks-libev /etc/default/shadowsocks-libev
-    sysctl --system
     adduser --system --disabled-password --disabled-login --no-create-home shadowsocks
     cp /home/kd-scripts-ss/config/local.conf /etc/sysctl.d/local.conf
+    sysctl --system
+    
 }
 
 function config_iptables(){
@@ -49,7 +51,7 @@ function install(){
 
     install_ss
     install_supervisor
-    optimize_ss
+    configure_ss
     config_iptables
    
 }

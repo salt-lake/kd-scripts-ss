@@ -14,6 +14,13 @@ check_BBR() {
     fi
 }
 
+# enable tcp fast open( May increase the risk of being discovered and unstable )
+enable_tfo() {
+    if ! grep '^net.ipv4.tcp_fastopen = 3' /etc/sysctl.conf; then
+        echo "net.ipv4.tcp_fastopen = 3" >> /etc/sysctl.conf
+        sysctl -p
+    fi
+}    
 
 # set iptable rules at startup
 restore_iptables() {
@@ -30,5 +37,6 @@ start_ss() {
 }
     
 check_BBR
+enable_tfo
 restore_iptables
 start_ss

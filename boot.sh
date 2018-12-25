@@ -10,8 +10,8 @@ if ! grep '^precedence ::ffff:0:0/96  100' /etc/gai.conf; then
 fi
 
 # increase the num of file descriptor
-if ! grep '^ulimit -n 65535' ~/.profile; then
-    echo 'ulimit -n 65535' >> ~/.profile
+if ! grep '^ulimit -n 51200' ~/.profile; then
+    echo 'ulimit -n 51200' >> ~/.profile
     source ~/.profile
 fi
 
