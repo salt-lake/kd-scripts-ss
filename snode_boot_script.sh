@@ -29,19 +29,19 @@ function check_redis(){
 }
 
 
-function check_proxy(){
-  if [ ! -d "/home/kd-proxy" ]; then
+function check_snode_proxy(){
+  if [ ! -d "/home/kd-proxy-ss" ]; then
     cd /home
     git clone https://github.com/youfangkeji/kd-proxy-ss
   else
-    cd /home/kd-proxy
+    cd /home/kd-proxy-ss
     git pull
   fi
 }
 
 
 function deploy_proxy(){
-  cd /home/kd-proxy
+  cd /home/kd-proxy-ss
   git pull
   npm install
 }
@@ -73,7 +73,7 @@ function init() {
   check_git
   check_node
   check_redis
-  check_proxy
+  check_snode_proxy
   deploy_proxy
   create_cron
   add_cron
