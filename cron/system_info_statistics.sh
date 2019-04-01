@@ -4,7 +4,8 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin;
 export PATH
 
-ethn=`ls /sys/class/net | head -n 1`
+# ethn=`ls /sys/class/net | head -n 1`
+ethn=`ifconfig | head -1 | cut -d " " -f1`
 
 net_traffic_statistics() {
 
