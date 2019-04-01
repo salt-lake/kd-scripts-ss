@@ -32,7 +32,7 @@ function check_redis(){
 function check_proxy(){
   if [ ! -d "/home/kd-proxy" ]; then
     cd /home
-    git clone https://github.com/Mooc1988/kd-proxy
+    git clone https://github.com/youfangkeji/kd-proxy-ss
   else
     cd /home/kd-proxy
     git pull
