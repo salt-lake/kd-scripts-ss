@@ -11,6 +11,8 @@ function install_ss(){
     fi
     if [ ! -d "/etc/shadowsocks-libev" ];then
       mkdir /etc/shadowsocks-libev
+    else
+      mv /etc/shadowsocks-libev/* /tmp
     fi
     cp /home/kd-scripts-ss/config/ss-libev/*  /etc/shadowsocks-libev
 }

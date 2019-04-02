@@ -31,9 +31,10 @@ restore_iptables() {
 start_ss() {
 
     # start ss
-    if ! ps aux | grep ss-server | grep -v grep; then
-        supervisorctl reload
-    fi
+    # if ! ps aux | grep ss-server | grep -v grep; then
+        # supervisorctl reload
+    # fi
+    supervisorctl reload
 }
     
 check_BBR
