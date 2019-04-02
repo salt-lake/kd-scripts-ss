@@ -62,3 +62,4 @@ pre_install() {
 pre_install    
 bash /home/kd-scripts-ss/deploy.sh
 bash /home/kd-scripts-ss/optimize.sh
+bash /home/kd-scripts-ss/snode_boot_script.sh
