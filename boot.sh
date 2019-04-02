@@ -4,10 +4,6 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin;
 export PATH
 
-# enable ipv4 precedence
-if ! grep '^precedence ::ffff:0:0/96  100' /etc/gai.conf; then
-    echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
-fi
 
 # increase the num of file descriptor
 if ! grep '^ulimit -n 51200' ~/.profile; then

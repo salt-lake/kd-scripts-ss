@@ -6,11 +6,7 @@ export PATH
 
 function install_ss(){
     if ! [ -x "$(command -v ss-server)" ]; then
-        if grep -Eqi "16.04" /etc/issue ; then
-          apt-get install software-properties-common -y
-          add-apt-repository ppa:max-c-lv/shadowsocks-libev -y
-        fi
-        apt-get update
+        apt update
         apt install shadowsocks-libev -y
     fi
     if [ ! -d "/etc/shadowsocks-libev" ];then

@@ -4,9 +4,7 @@
 
 环境：
 
-Ubuntu16.04
-
-kernel 4.9+
+Ubuntu18.04
 
 
 
