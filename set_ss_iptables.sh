@@ -4,6 +4,8 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin;
 export PATH
 
+
+# clear needless rules
 iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT
 iptables -P OUTPUT ACCEPT
@@ -13,12 +15,18 @@ iptables -Z
 iptables -F -t nat
 iptables -X -t nat
 iptables -Z -t nat
+
+
+# INPUT chain rules
 iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -p tcp -m multiport --dport 23:42 -j ACCEPT
 iptables -A INPUT -p udp -m multiport --dport 23:42 -j ACCEPT
 iptables -A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A INPUT -p icmp -j ACCEPT
+
+
+# Port forwarding
 iptables -t nat -A PREROUTING -p udp -m multiport --dports 81:138 -j REDIRECT --to-ports 23
 iptables -t nat -A PREROUTING -p tcp -m multiport --dports 81:138 -j REDIRECT --to-ports 23
 iptables -t nat -A PREROUTING -p tcp -m multiport --dports 139:187 -j REDIRECT --to-ports 24
@@ -59,6 +67,28 @@ iptables -t nat -A PREROUTING -p tcp -m multiport --dports 973:1000 -j REDIRECT 
 iptables -t nat -A PREROUTING -p udp -m multiport --dports 973:1000 -j REDIRECT --to-ports 41
 iptables -t nat -A PREROUTING -p tcp -m multiport --dports 1001:1023 -j REDIRECT --to-ports 42
 iptables -t nat -A PREROUTING -p udp -m multiport --dports 1001:1023 -j REDIRECT --to-ports 42
+
+
+# block BT download rules
+iptables -t mangle -A OUTPUT -m string --string "BitTorrent" --algo bm --to 65535 -j DROP
+iptables -t mangle -A OUTPUT -m string --string "BitTorrent protocol" --algo bm --to 65535 -j DROP
+iptables -t mangle -A OUTPUT -m string --string "peer_id=" --algo bm --to 65535 -j DROP
+iptables -t mangle -A OUTPUT -m string --string ".torrent" --algo bm --to 65535 -j DROP
+iptables -t mangle -A OUTPUT -m string --string "announce.php?passkey=" --algo bm --to 65535 -j DROP
+iptables -t mangle -A OUTPUT -m string --string "torrent" --algo bm --to 65535 -j DROP
+iptables -t mangle -A OUTPUT -m string --string "announce" --algo bm --to 65535 -j DROP
+iptables -t mangle -A OUTPUT -m string --string "info_hash" --algo bm --to 65535 -j DROP
+iptables -t mangle -A OUTPUT -m string --string "get_peers" --algo bm -j DROP
+iptables -t mangle -A OUTPUT -m string --string "announce_peer" --algo bm -j DROP
+iptables -t mangle -A OUTPUT -m string --string "find_node" --algo bm -j DROP
+iptables -t mangle -A OUTPUT -m string --string "GET /scrape?info_hash=" --algo bm --to 65535 -j DROP
+iptables -t mangle -A OUTPUT -m string --string "GET /announce.php?info_hash=" --algo bm --to 65535 -j DROP
+iptables -t mangle -A OUTPUT -m string --string "GET /scrape.php?info_hash=" --algo bm --to 65535 -j DROP
+iptables -t mangle -A OUTPUT -m string --string "GET /scrape.php?passkey=" --algo bm --to 65535 -j DROP
+iptables -t mangle -A OUTPUT -m string --algo bm --hex-string "|13426974546f7272656e742070726f746f636f6c|" -j DROP
+
+
+#set chain default rules
 iptables -P INPUT DROP
 iptables -P FORWARD ACCEPT
 iptables -P OUTPUT ACCEPT
