@@ -15,6 +15,9 @@ iptables -Z
 iptables -F -t nat
 iptables -X -t nat
 iptables -Z -t nat
+iptables -F -t mangle
+iptables -X -t mangle
+iptables -Z -t mangle
 
 
 # INPUT chain rules
@@ -69,6 +72,9 @@ iptables -t nat -A PREROUTING -p tcp -m multiport --dports 1001:1023 -j REDIRECT
 iptables -t nat -A PREROUTING -p udp -m multiport --dports 1001:1023 -j REDIRECT --to-ports 42
 
 
+# Forward http traffic to the squid port
+#iptables -t nat -m owner --uid-owner shadowsocks -A OUTPUT -p tcp --dport 80 -j REDIRECT --to-port 5128
+
 # block BT download rules
 iptables -t mangle -A OUTPUT -m string --string "BitTorrent" --algo bm --to 65535 -j DROP
 iptables -t mangle -A OUTPUT -m string --string "BitTorrent protocol" --algo bm --to 65535 -j DROP
@@ -88,7 +94,11 @@ iptables -t mangle -A OUTPUT -m string --string "GET /scrape.php?passkey=" --alg
 iptables -t mangle -A OUTPUT -m string --algo bm --hex-string "|13426974546f7272656e742070726f746f636f6c|" -j DROP
 
 
+#block UDP traffic
+# iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
+# iptables -A OUTPUT -p udp -j DROP
+
 #set chain default rules
-iptables -P INPUT DROP
+iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT
 iptables -P OUTPUT ACCEPT
