@@ -19,8 +19,8 @@ function install_ss(){
 
 function install_supervisor(){
     if ! [ -x "$(command -v supervisorctl)" ]; then
-        apt update
-        apt install supervisor -y
+        apt-get update
+        DEBIAN_FRONTEND=noninteractive apt-get install supervisor -y
     fi
     if [ ! -f "/etc/supervisor/conf.d/ss.conf" ]; then
       cp /home/kd-scripts-ss/config/ss.conf /etc/supervisor/conf.d/ss.conf
